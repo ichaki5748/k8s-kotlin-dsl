@@ -21,6 +21,12 @@ fun main(args: Array<String>) {
               containerPort = 9090
               protocol = "UDP"
             }
+            env {
+              name = "some-env-var"
+            }
+            env {
+              name = "some-other-name"
+            }
           }
 
         }

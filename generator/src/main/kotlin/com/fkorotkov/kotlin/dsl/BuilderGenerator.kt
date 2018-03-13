@@ -48,16 +48,18 @@ ${
     if (property.isListWithNonAbstractObjects()) {
       val propertyClassifier = (property.returnType.arguments[0].type as KType).classifier as KClass<*>
 
+      val singularName = if (property.name.endsWith("s")) property.name.dropLast(1) else property.name
+
       if (propertyClassifier.isSubclassOf(Number::class) || propertyClassifier.isSubclassOf(String::class)) {
         return """
-fun ${clazz.simpleName}.`${property.name.dropLast(1)}`(value: ${propertyClassifier.qualifiedName!!}) {
+fun ${clazz.simpleName}.`$singularName`(value: ${propertyClassifier.qualifiedName!!}) {
   this.`${property.name}`.add(value)
 }
 """
       } else {
 
         return """
-fun ${clazz.simpleName}.`${property.name.dropLast(1)}`(block: ${propertyClassifier.qualifiedName!!}.() -> Unit = {}) {
+fun ${clazz.simpleName}.`$singularName`(block: ${propertyClassifier.qualifiedName!!}.() -> Unit = {}) {
   val newObject = ${propertyClassifier.qualifiedName!!}()
   newObject.block()
   this.`${property.name}`.add(newObject)

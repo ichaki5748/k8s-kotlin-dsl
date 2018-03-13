@@ -1,4 +1,7 @@
-import com.fkorotkov.kubernetes.*
+import com.fkorotkov.kubernetes.backend
+import com.fkorotkov.kubernetes.metadata
+import com.fkorotkov.kubernetes.newIngress
+import com.fkorotkov.kubernetes.spec
 import io.fabric8.kubernetes.api.model.IntOrString
 import io.fabric8.kubernetes.client.DefaultKubernetesClient
 
