@@ -4,13 +4,15 @@ import java.io.File
 import java.util.*
 import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty
+import kotlin.reflect.KType
+import kotlin.reflect.full.isSubclassOf
 
 object BuilderGenerator {
   fun generateBuildersForPropertyFile(
-    outputFolder: File,
-    outputPackage: String,
-    outputFileName: String,
-    clazzToProperties: List<Pair<KClass<*>, KMutableProperty<*>>>
+      outputFolder: File,
+      outputPackage: String,
+      outputFileName: String,
+      clazzToProperties: List<Pair<KClass<*>, KMutableProperty<*>>>
   ) {
     val destinationFolder = File(outputFolder, outputPackage.replace('.', File.separatorChar))
     if (!destinationFolder.exists()) {
@@ -27,34 +29,57 @@ object BuilderGenerator {
   }
 
   private fun generateBuilders(allClasses: List<KClass<*>>, clazzToProperties: List<Pair<KClass<*>, KMutableProperty<*>>>, outputPackage: String): String {
+
     return """// GENERATED
 package $outputPackage
 
 ${
-allClasses.map { it.qualifiedName }.toSet().map { "import $it" }.sorted().joinToString("\n")
-}
+    allClasses.map { it.qualifiedName }.toSet().map { "import $it" }.sorted().joinToString("\n")
+    }
 
 ${
-clazzToProperties.map { (clazz, property) -> extensionFunctionTemplate(clazz, property) }.joinToString("\n")
-}
+    clazzToProperties.joinToString("\n") { (clazz, property) -> extensionFunctionTemplate(clazz, property) }
+    }
 """
   }
 
   private fun extensionFunctionTemplate(clazz: KClass<*>, property: KMutableProperty<*>): String {
-    val returnClass = property.returnType.classifier as KClass<*>
-    val generics: List<String> = (1..clazz.typeParameters.size).map { "T$it" }
 
-    val clazzDecl = clazz.simpleName + genericsTemplate(generics)
-    val returnClassDecl = returnClass.simpleName + genericsTemplate(Collections.nCopies(returnClass.typeParameters.size, "*"))
+    if (property.isListWithNonAbstractObjects()) {
+      val propertyClassifier = (property.returnType.arguments[0].type as KType).classifier as KClass<*>
 
-    return """
+      if (propertyClassifier.isSubclassOf(Number::class)) {
+        return """
+fun ${clazz.simpleName}.`${property.name.dropLast(1)}`(value: ${propertyClassifier.qualifiedName!!}) {
+  this.`${property.name}`.add(value)
+}
+"""
+      } else {
+
+        return """
+fun ${clazz.simpleName}.`${property.name.dropLast(1)}`(block: ${propertyClassifier.qualifiedName!!}.() -> Unit = {}) {
+  val newObject = ${propertyClassifier.qualifiedName!!}()
+  newObject.block()
+  this.`${property.name}`.add(newObject)
+}
+"""
+      }
+    } else {
+      val returnClass = property.returnType.classifier as KClass<*>
+      val generics: List<String> = (1..clazz.typeParameters.size).map { "T$it" }
+
+      val clazzDecl = clazz.simpleName + genericsTemplate(generics)
+      val returnClassDecl = returnClass.simpleName + genericsTemplate(Collections.nCopies(returnClass.typeParameters.size, "*"))
+
+      return """
 fun ${genericsTemplate(generics)} $clazzDecl.`${property.name}`(block: $returnClassDecl.() -> Unit = {}) {${initializer(property, returnClass)}
   this.`${property.name}`.block()
 }
 """
+    }
   }
 
-  private fun initializer(property: KMutableProperty<*>, returnClass: KClass<*>): String {
+  fun initializer(property: KMutableProperty<*>, returnClass: KClass<*>): String {
     if (returnClass.isAbstract) return ""
     return """
   if(this.`${property.name}` == null) {
@@ -63,14 +88,14 @@ fun ${genericsTemplate(generics)} $clazzDecl.`${property.name}`(block: $returnCl
 """
   }
 
-  private fun genericsTemplate(generics: List<String>): String {
+  fun genericsTemplate(generics: List<String>): String {
     if (generics.isEmpty()) {
       return ""
     } else {
       return generics.joinToString(
-        separator = ", ",
-        prefix = "<",
-        postfix = ">"
+          separator = ", ",
+          prefix = "<",
+          postfix = ">"
       )
     }
   }

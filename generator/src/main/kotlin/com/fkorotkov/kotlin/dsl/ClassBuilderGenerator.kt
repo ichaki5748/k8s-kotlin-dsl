@@ -39,19 +39,11 @@ allClasses.map { classBuilderTemplate(it) }.joinToString("\n")
 
   private fun classBuilderTemplate(clazz: KClass<*>): String {
     return """
-fun ${clazz.simpleName?.smartDecapitalize()}(block : ${clazz.simpleName}.() -> Unit = {}): ${clazz.simpleName} {
+fun new${clazz.simpleName?.capitalize()}(block : ${clazz.simpleName}.() -> Unit = {}): ${clazz.simpleName} {
   val instance = ${clazz.simpleName}()
   instance.block()
   return instance
 }
 """
-  }
-
-  private fun String.smartDecapitalize(): String {
-    return if (isNotEmpty() && this[0].isUpperCase()) {
-      val upperCasePrefixLength = takeWhile(Char::isUpperCase).length
-      val abbreviationLength = Integer.max(1, upperCasePrefixLength - 1)
-      substring(0, abbreviationLength).toLowerCase() + substring(abbreviationLength)
-    } else this
   }
 }

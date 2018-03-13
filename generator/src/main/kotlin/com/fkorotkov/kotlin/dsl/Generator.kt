@@ -10,15 +10,15 @@ import kotlin.reflect.jvm.javaField
 
 object Generator {
   fun generate(
-    clazz: KClass<*>,
-    outputFolder: File,
-    outputPackage: String,
-    excludePackagesPrefixes: Set<String> = emptySet()
+      clazz: KClass<*>,
+      outputFolder: File,
+      outputPackage: String,
+      excludePackagesPrefixes: Set<String> = emptySet()
   ) {
     val allClasses = ClassUtil.findAllClassesOnClasspath().filter {
       try {
         it.isSubclassOf(clazz)
-      } catch(e: Throwable) {
+      } catch (e: Throwable) {
         false
       }
     }.filterNot { subClazz ->
@@ -31,30 +31,32 @@ object Generator {
       }.filter {
         // we don't care about primitive or standard types
         val classifier = it.returnType.classifier
-        classifier is KClass<*> &&
-          !(classifier.qualifiedName?.startsWith("java.") ?: true) &&
-          !(classifier.qualifiedName?.startsWith("kotlin.") ?: true)
+        (classifier is KClass<*>) &&
+            (classifier.qualifiedName == null ||
+                (it.isListWithNonAbstractObjects() ||
+                    (!(classifier.qualifiedName!!.startsWith("java.")) &&
+                        !(classifier.qualifiedName!!.startsWith("kotlin.")))))
       }
     }.mapNotNull { property ->
-      property.javaField?.declaringClass?.kotlin?.let{ it to property }
+      property.javaField?.declaringClass?.kotlin?.let { it to property }
     }.distinctBy { (clazz, property) ->
       "${clazz.qualifiedName}#${property.name}"
     }.groupBy { (_, property) ->
       property.name
     }.forEach { propertyName, clazzToProperties ->
       BuilderGenerator.generateBuildersForPropertyFile(
-        outputFolder,
-        outputPackage,
-        "$propertyName.kt",
-        clazzToProperties.sortedBy { it.first.simpleName }
+          outputFolder,
+          outputPackage,
+          "$propertyName.kt",
+          clazzToProperties.sortedBy { it.first.simpleName }
       )
     }
 
     ClassBuilderGenerator.generateClassBuilders(
-      outputFolder,
-      outputPackage,
-      "ClassBuilders.kt",
-      allClasses
+        outputFolder,
+        outputPackage,
+        "ClassBuilders.kt",
+        allClasses
     )
   }
 }
