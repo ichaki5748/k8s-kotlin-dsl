@@ -36,9 +36,7 @@ fun  DeploymentStrategy.`resources`(block: ResourceRequirements.() -> Unit = {})
 }
 
 
-fun PolicyRule.`resource`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`resources`.add(newObject)
+fun PolicyRule.`resource`(value: kotlin.String) {
+  this.`resources`.add(value)
 }
 

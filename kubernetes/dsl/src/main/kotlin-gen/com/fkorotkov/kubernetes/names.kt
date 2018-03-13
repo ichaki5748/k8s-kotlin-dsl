@@ -7,10 +7,8 @@ import io.fabric8.kubernetes.api.model.apiextensions.CustomResourceDefinitionSpe
 import kotlin.collections.List
 
 
-fun ContainerImage.`name`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`names`.add(newObject)
+fun ContainerImage.`name`(value: kotlin.String) {
+  this.`names`.add(value)
 }
 
 

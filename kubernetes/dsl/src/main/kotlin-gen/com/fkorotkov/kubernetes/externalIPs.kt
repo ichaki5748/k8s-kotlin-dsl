@@ -5,9 +5,7 @@ import io.fabric8.kubernetes.api.model.ServiceSpec
 import kotlin.collections.List
 
 
-fun ServiceSpec.`externalIP`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`externalIPs`.add(newObject)
+fun ServiceSpec.`externalIP`(value: kotlin.String) {
+  this.`externalIPs`.add(value)
 }
 

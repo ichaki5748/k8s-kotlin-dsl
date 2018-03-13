@@ -48,7 +48,7 @@ ${
     if (property.isListWithNonAbstractObjects()) {
       val propertyClassifier = (property.returnType.arguments[0].type as KType).classifier as KClass<*>
 
-      if (propertyClassifier.isSubclassOf(Number::class)) {
+      if (propertyClassifier.isSubclassOf(Number::class) || propertyClassifier.isSubclassOf(String::class)) {
         return """
 fun ${clazz.simpleName}.`${property.name.dropLast(1)}`(value: ${propertyClassifier.qualifiedName!!}) {
   this.`${property.name}`.add(value)

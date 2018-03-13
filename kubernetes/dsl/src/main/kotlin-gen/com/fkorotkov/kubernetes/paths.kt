@@ -13,9 +13,7 @@ fun HTTPIngressRuleValue.`path`(block: io.fabric8.kubernetes.api.model.extension
 }
 
 
-fun RootPaths.`path`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`paths`.add(newObject)
+fun RootPaths.`path`(value: kotlin.String) {
+  this.`paths`.add(value)
 }
 

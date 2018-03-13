@@ -5,9 +5,7 @@ import io.fabric8.openshift.api.model.ScopeRestriction
 import kotlin.collections.List
 
 
-fun ScopeRestriction.`literal`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`literals`.add(newObject)
+fun ScopeRestriction.`literal`(value: kotlin.String) {
+  this.`literals`.add(value)
 }
 

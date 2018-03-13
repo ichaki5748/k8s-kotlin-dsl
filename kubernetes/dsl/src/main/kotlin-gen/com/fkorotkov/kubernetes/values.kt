@@ -6,16 +6,12 @@ import io.fabric8.kubernetes.api.model.NodeSelectorRequirement
 import kotlin.collections.List
 
 
-fun LabelSelectorRequirement.`value`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`values`.add(newObject)
+fun LabelSelectorRequirement.`value`(value: kotlin.String) {
+  this.`values`.add(value)
 }
 
 
-fun NodeSelectorRequirement.`value`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`values`.add(newObject)
+fun NodeSelectorRequirement.`value`(value: kotlin.String) {
+  this.`values`.add(value)
 }
 

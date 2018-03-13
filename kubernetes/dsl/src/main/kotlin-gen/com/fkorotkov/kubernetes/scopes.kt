@@ -5,9 +5,7 @@ import io.fabric8.kubernetes.api.model.ResourceQuotaSpec
 import kotlin.collections.List
 
 
-fun ResourceQuotaSpec.`scope`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`scopes`.add(newObject)
+fun ResourceQuotaSpec.`scope`(value: kotlin.String) {
+  this.`scopes`.add(value)
 }
 

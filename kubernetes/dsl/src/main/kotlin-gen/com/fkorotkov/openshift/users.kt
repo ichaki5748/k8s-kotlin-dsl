@@ -7,23 +7,17 @@ import io.fabric8.openshift.api.model.UserRestriction
 import kotlin.collections.List
 
 
-fun Group.`user`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`users`.add(newObject)
+fun Group.`user`(value: kotlin.String) {
+  this.`users`.add(value)
 }
 
 
-fun SecurityContextConstraints.`user`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`users`.add(newObject)
+fun SecurityContextConstraints.`user`(value: kotlin.String) {
+  this.`users`.add(value)
 }
 
 
-fun UserRestriction.`user`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`users`.add(newObject)
+fun UserRestriction.`user`(value: kotlin.String) {
+  this.`users`.add(value)
 }
 

@@ -5,9 +5,7 @@ import io.fabric8.kubernetes.api.model.apiextensions.CustomResourceDefinitionNam
 import kotlin.collections.List
 
 
-fun CustomResourceDefinitionNames.`shortName`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`shortNames`.add(newObject)
+fun CustomResourceDefinitionNames.`shortName`(value: kotlin.String) {
+  this.`shortNames`.add(value)
 }
 

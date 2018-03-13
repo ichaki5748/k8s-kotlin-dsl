@@ -6,16 +6,12 @@ import io.fabric8.kubernetes.api.model.ObjectMeta
 import kotlin.collections.List
 
 
-fun NamespaceSpec.`finalizer`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`finalizers`.add(newObject)
+fun NamespaceSpec.`finalizer`(value: kotlin.String) {
+  this.`finalizers`.add(value)
 }
 
 
-fun ObjectMeta.`finalizer`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`finalizers`.add(newObject)
+fun ObjectMeta.`finalizer`(value: kotlin.String) {
+  this.`finalizers`.add(value)
 }
 

@@ -5,9 +5,7 @@ import io.fabric8.openshift.api.model.OAuthClient
 import kotlin.collections.List
 
 
-fun OAuthClient.`redirectURI`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`redirectURIs`.add(newObject)
+fun OAuthClient.`redirectURI`(value: kotlin.String) {
+  this.`redirectURIs`.add(value)
 }
 

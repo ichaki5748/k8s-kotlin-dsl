@@ -5,9 +5,7 @@ import io.fabric8.kubernetes.api.model.extensions.PodSecurityPolicySpec
 import kotlin.collections.List
 
 
-fun PodSecurityPolicySpec.`allowedCapabilitie`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`allowedCapabilities`.add(newObject)
+fun PodSecurityPolicySpec.`allowedCapabilitie`(value: kotlin.String) {
+  this.`allowedCapabilities`.add(value)
 }
 

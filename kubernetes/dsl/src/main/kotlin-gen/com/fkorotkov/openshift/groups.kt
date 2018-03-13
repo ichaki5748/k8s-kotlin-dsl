@@ -10,44 +10,32 @@ import io.fabric8.openshift.api.model.UserRestriction
 import kotlin.collections.List
 
 
-fun GroupRestriction.`group`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`groups`.add(newObject)
+fun GroupRestriction.`group`(value: kotlin.String) {
+  this.`groups`.add(value)
 }
 
 
-fun LocalSubjectAccessReview.`group`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`groups`.add(newObject)
+fun LocalSubjectAccessReview.`group`(value: kotlin.String) {
+  this.`groups`.add(value)
 }
 
 
-fun SecurityContextConstraints.`group`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`groups`.add(newObject)
+fun SecurityContextConstraints.`group`(value: kotlin.String) {
+  this.`groups`.add(value)
 }
 
 
-fun SubjectAccessReview.`group`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`groups`.add(newObject)
+fun SubjectAccessReview.`group`(value: kotlin.String) {
+  this.`groups`.add(value)
 }
 
 
-fun User.`group`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`groups`.add(newObject)
+fun User.`group`(value: kotlin.String) {
+  this.`groups`.add(value)
 }
 
 
-fun UserRestriction.`group`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`groups`.add(newObject)
+fun UserRestriction.`group`(value: kotlin.String) {
+  this.`groups`.add(value)
 }
 

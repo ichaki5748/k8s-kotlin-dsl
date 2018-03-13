@@ -9,37 +9,27 @@ import io.fabric8.openshift.api.model.SubjectAccessReview
 import kotlin.collections.List
 
 
-fun LocalSubjectAccessReview.`scope`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`scopes`.add(newObject)
+fun LocalSubjectAccessReview.`scope`(value: kotlin.String) {
+  this.`scopes`.add(value)
 }
 
 
-fun OAuthAccessToken.`scope`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`scopes`.add(newObject)
+fun OAuthAccessToken.`scope`(value: kotlin.String) {
+  this.`scopes`.add(value)
 }
 
 
-fun OAuthAuthorizeToken.`scope`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`scopes`.add(newObject)
+fun OAuthAuthorizeToken.`scope`(value: kotlin.String) {
+  this.`scopes`.add(value)
 }
 
 
-fun OAuthClientAuthorization.`scope`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`scopes`.add(newObject)
+fun OAuthClientAuthorization.`scope`(value: kotlin.String) {
+  this.`scopes`.add(value)
 }
 
 
-fun SubjectAccessReview.`scope`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`scopes`.add(newObject)
+fun SubjectAccessReview.`scope`(value: kotlin.String) {
+  this.`scopes`.add(value)
 }
 

@@ -6,16 +6,12 @@ import io.fabric8.openshift.api.model.RoleBinding
 import kotlin.collections.List
 
 
-fun ClusterRoleBinding.`userName`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`userNames`.add(newObject)
+fun ClusterRoleBinding.`userName`(value: kotlin.String) {
+  this.`userNames`.add(value)
 }
 
 
-fun RoleBinding.`userName`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`userNames`.add(newObject)
+fun RoleBinding.`userName`(value: kotlin.String) {
+  this.`userNames`.add(value)
 }
 

@@ -7,23 +7,17 @@ import io.fabric8.kubernetes.api.model.PersistentVolumeSpec
 import kotlin.collections.List
 
 
-fun PersistentVolumeClaimSpec.`accessMode`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`accessModes`.add(newObject)
+fun PersistentVolumeClaimSpec.`accessMode`(value: kotlin.String) {
+  this.`accessModes`.add(value)
 }
 
 
-fun PersistentVolumeClaimStatus.`accessMode`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`accessModes`.add(newObject)
+fun PersistentVolumeClaimStatus.`accessMode`(value: kotlin.String) {
+  this.`accessModes`.add(value)
 }
 
 
-fun PersistentVolumeSpec.`accessMode`(block: kotlin.String.() -> Unit = {}) {
-  val newObject = kotlin.String()
-  newObject.block()
-  this.`accessModes`.add(newObject)
+fun PersistentVolumeSpec.`accessMode`(value: kotlin.String) {
+  this.`accessModes`.add(value)
 }
 
